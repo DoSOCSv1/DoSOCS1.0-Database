@@ -1,4 +1,7 @@
 Database
+
+Copyright (C) 2014 University of Nebraska at Omaha.
 ========
 
-Database schema for related projects
+About
+Database schema for is a Free Open Source Software (FOSS) project built for OCRL related projects
