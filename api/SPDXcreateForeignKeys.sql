@@ -1,0 +1,13 @@
+ALTER TABLE doc_license_associations ADD FOREIGN KEY (spdx_doc_id) REFERENCES spdx_docs (id);
+ALTER TABLE doc_license_associations ADD FOREIGN KEY (license_id) REFERENCES licenses (id);
+ALTER TABLE licensings ADD FOREIGN KEY (package_file_id) REFERENCES package_files (id);
+ALTER TABLE licensings ADD FOREIGN KEY (doc_license_association_id) REFERENCES doc_license_associations (id);
+ALTER TABLE doc_file_package_associations ADD FOREIGN KEY (spdx_doc_id) REFERENCES spdx_docs (id);
+ALTER TABLE doc_file_package_associations ADD FOREIGN KEY (package_id) REFERENCES packages (id);
+ALTER TABLE doc_file_package_associations ADD FOREIGN KEY (package_file_id) REFERENCES package_files (id);
+ALTER TABLE creators ADD FOREIGN KEY (spdx_doc_id) REFERENCES spdx_docs (id);
+ALTER TABLE reviewers ADD FOREIGN KEY (spdx_doc_id) REFERENCES spdx_docs (id);
+ALTER TABLE product_software ADD FOREIGN KEY (software_id) REFERENCES software (id);
+ALTER TABLE product_software ADD FOREIGN KEY (product_id) REFERENCES products (id);
+ALTER TABLE product_software ADD FOREIGN KEY (package_id) REFERENCES packages (id);
+ALTER TABLE products ADD FOREIGN KEY (parent_product_id) REFERENCES products (id);
