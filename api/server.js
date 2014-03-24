@@ -81,7 +81,7 @@ app.get('/api/spdx/:id', function(req, res){
 
         var sql = 
 	    	"SELECT " +
-	        	"spdx_version, data_license, document_comment, creator, creators.created_at, creator_comments, package_name, package_version, package_download_location, package_summary, package_file_name, package_supplier, package_originator, package_checksum, package_verification_code, package_description,package_copyright_text, package_license_declared, package_license_concluded, package_license_info_from_files" +
+	        	"spdx_docs.id, spdx_version, data_license, document_comment, creator, creators.created_at, creator_comments, package_name, package_version, package_download_location, package_summary, package_file_name, package_supplier, package_originator, package_checksum, package_verification_code, package_description,package_copyright_text, package_license_declared, package_license_concluded, package_license_info_from_files" +
 	    	" FROM " +
 	        	"spdx_docs" +
 	    	" LEFT JOIN " + 
@@ -103,7 +103,7 @@ app.get('/api/spdx/:id', function(req, res){
             if (err != null) {
                 res.end("Query error:" + err);
             } else {
-                res.send(rows);
+                res.send(rows[0]);
             }
             // Release this connection
             connection.release();
@@ -114,7 +114,7 @@ app.get('/api/spdx/:id', function(req, res){
 });
 
 app.put('/api/spdx/:id', function(req, res) {
-    console.log(res);
+    console.log(req.query);
     pool.getConnection(function(err, connection) {
         if(err != null) {
             res.end('Error connecting to mysql:' + err+'\n');
@@ -124,42 +124,38 @@ app.put('/api/spdx/:id', function(req, res) {
                   "SET " +
                     "document_comment='" + connection.escape(req.query.document_comment) + "'" + 
                   "WHERE "+
-                    "id=" + connection.escape(req.query.id); 
+                    "id=" + connection.escape(req.params.id); 
         var query = connection.query(sql, function(err, rows){
             if (err != null) {
                 res.end("Query error:" + err);
             } else {
                 res.send("success");
             }
-            // Release this connection
-            connection.release();
         });
 	    var package_id = -1;
-        sql = "SELECT FIRST(package_id) " +
+        sql = "SELECT package_id " +
               "FROM " +
                     "doc_file_package_associations" + 
               "WHERE "+
-                    "spdx_doc_id=" + connection.escape(req.query.id); 
+                    "spdx_doc_id=" + connection.escape(req.params.id); 
         var query1 = connection.query(sql, function(err, rows){
             if (err != null) {
                 res.end("Query error:" + err);
             } else {
-                console.log(rows);
-                package_id = rows;
+                console.log(rows[0]);
+                package_id = rows[0];
                 res.send("success");
             }
-            // Release this connection
-            connection.release();
         });
 
         if(package_id >= 0){
 	        sql = "UPDATE " +
                         "packages " +
                   "SET " +
-                        "document_comment='" + connection.escape(req.query.package_comment) + "'" + 
+                        "package_license_concluded='" + connection.escape(req.query.licenseconcluded) + "'" + 
                   "WHERE "+
                         "id=" + package_id; 
-            var query = connection.query(sql, function(err, rows){
+            var query2 = connection.query(sql, function(err, rows){
                 if (err != null) {
                     res.end("Query error:" + err);
                 } else {
