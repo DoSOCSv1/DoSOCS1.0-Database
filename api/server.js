@@ -38,7 +38,7 @@ app.get('/api/spdx', function(req, res){
 
         var sql = 
 	    	"SELECT " +
-	        	"spdx_version, data_license, document_comment, creator, creators.created_at, creator_comments, package_name, package_version, package_download_location, package_summary, package_file_name, package_supplier, package_originator, package_checksum, package_verification_code, package_description,package_copyright_text, package_license_declared, package_license_concluded, package_license_info_from_files" +
+	        	"spdx_docs.id, spdx_version, data_license, document_comment, creator, creators.created_at, creator_comments, package_name, package_version, package_download_location, package_summary, package_file_name, package_supplier, package_originator, package_checksum, package_verification_code, package_description,package_copyright_text, package_license_declared, package_license_concluded, package_license_info_from_files" +
 	    	" FROM " +
 	        	"spdx_docs" +
 	    	" LEFT JOIN " + 
@@ -81,7 +81,7 @@ app.get('/api/spdx/:id', function(req, res){
 
         var sql = 
 	    	"SELECT " +
-	        	"spdx_docs.id, spdx_version, data_license, document_comment, creator, creators.created_at, creator_comments, package_name, package_version, package_download_location, package_summary, package_file_name, package_supplier, package_originator, package_checksum, package_verification_code, package_description,package_copyright_text, package_license_declared, package_license_concluded, package_license_info_from_files" +
+	        	"spdx_docs.id, packages.id as package_id, spdx_version, data_license, document_comment, creator, creators.created_at, creator_comments, package_name, package_version, package_download_location, package_summary, package_file_name, package_supplier, package_originator, package_checksum, package_verification_code, package_description,package_copyright_text, package_license_declared, package_license_concluded, package_license_info_from_files" +
 	    	" FROM " +
 	        	"spdx_docs" +
 	    	" LEFT JOIN " + 
@@ -122,8 +122,8 @@ app.put('/api/spdx/:id', function(req, res) {
 	    var sql = "UPDATE " +
                     "spdx_docs " +
                   "SET " +
-                    "document_comment='" + connection.escape(req.query.document_comment) + "'" + 
-                  "WHERE "+
+                    "document_comment=" + connection.escape(req.query.document_comment) +  
+                  " WHERE "+
                     "id=" + connection.escape(req.params.id); 
         var query = connection.query(sql, function(err, rows){
             if (err != null) {
@@ -132,39 +132,21 @@ app.put('/api/spdx/:id', function(req, res) {
                 res.send("success");
             }
         });
-	    var package_id = -1;
-        sql = "SELECT package_id " +
-              "FROM " +
-                    "doc_file_package_associations" + 
-              "WHERE "+
-                    "spdx_doc_id=" + connection.escape(req.params.id); 
-        var query1 = connection.query(sql, function(err, rows){
+	    sql = "UPDATE " +
+                    "packages " +
+                "SET " +
+                    "package_license_concluded=" + connection.escape(req.query.licenseconcluded) + 
+              " WHERE "+
+                    "id=" + connection.escape(req.query.package_id); 
+        var query2 = connection.query(sql, function(err, rows){
             if (err != null) {
                 res.end("Query error:" + err);
             } else {
-                console.log(rows[0]);
-                package_id = rows[0];
                 res.send("success");
             }
+            // Release this connection
+            connection.release();
         });
-
-        if(package_id >= 0){
-	        sql = "UPDATE " +
-                        "packages " +
-                  "SET " +
-                        "package_license_concluded='" + connection.escape(req.query.licenseconcluded) + "'" + 
-                  "WHERE "+
-                        "id=" + package_id; 
-            var query2 = connection.query(sql, function(err, rows){
-                if (err != null) {
-                    res.end("Query error:" + err);
-                } else {
-                    res.send("success");
-                }
-                // Release this connection
-                connection.release();
-            });
-        }
     });
     
 });
@@ -486,7 +468,7 @@ app.get('/api/product_software/:id', function(req, res){
             res.end('Error connecting to mysql:' + err+'\n');
         }
 
-        var sql = "SELECT s.* " +
+        var sql = "SELECT DISTINCT s.* " +
                           "FROM SPDX.product_software AS ps " +
                                     "LEFT OUTER JOIN SPDX.software AS s ON ps.software_id = s.id " +
                           "WHERE ps.product_id = " + connection.escape(req.params.id);
@@ -610,47 +592,6 @@ app.get('/api/child_products/:id', function(req, res){
 // child software
 //************************************************************
 
-// GET api/child_software
-app.get('/api/child_software', function(req, res){
-    pool.getConnection(function(err, connection) {
-        if(err != null) {
-            res.end('Error connecting to mysql:' + err+'\n');
-        }
-
-        var sql = "SELECT s.id AS software_id," +
-                                              "s.software_name," +
-                                                  "s.software_version," +
-                                                  "s.software_description," +
-                                                  "s.created_at," +
-                                                  "s.updated_at," +
-                                                  "p.id AS product_id," +
-                                                  "p.product_name " +
-
-                                    "FROM products AS p " +
-                                                 "INNER JOIN product_software AS ps ON p.id = ps.product_id " +
-                                                 "LEFT OUTER JOIN software AS s ON ps.software_id = s.id " +
-                                                 "LEFT OUTER JOIN products AS pp ON p.parent_product_id = pp.id " +
-
-                                   "GROUP BY s.id," +
-                                                     "s.software_name," +
-                                                         "s.software_version," +
-                                                         "s.created_at," +
-                                                         "s.updated_at";
-
-        var query = connection.query(sql, function(err, rows){
-            if (err != null) {
-                res.end("Query error:" + err);
-            } else {
-                res.send(rows);
-            }
-            // Release this connection
-            connection.release();
-        });
-
-	console.log(query.sql);
-    });
-});
-
 // GET api/child_software/{id}
 app.get('/api/child_software/:id', function(req, res){
     pool.getConnection(function(err, connection) {
@@ -679,6 +620,40 @@ app.get('/api/child_software/:id', function(req, res){
                                                           "s.software_version," +
                                                           "s.created_at," +
                                                           "s.updated_at";
+
+	var query = connection.query(sql, function(err, rows){
+            if (err != null) {
+                res.end("Query error:" + err);
+            } else {
+                res.send(rows);
+            }
+            // Release the connection
+            connection.release();
+        });
+
+        console.log(query.sql);
+    });
+});
+
+//************************************************************
+// avalible packages
+//************************************************************
+
+// GET api/child_software/{id}
+app.get('/api/avalible_packages/:id', function(req, res){
+    pool.getConnection(function(err, connection) {
+        if (err != null) {
+            res.end('Error connecting to mysql:' + err+'\n');
+        }
+
+        var sql = "SELECT  p.id," + 
+        			      "p.package_name," +
+        			      "p.package_version " +
+        			      
+        		   "FROM packages AS p " +
+        		   "WHERE p.id NOT IN (SELECT package_id " +
+        		   					   "FROM product_software " +
+        		   					    "WHERE product_id = " + connection.escape(req.params.id) + ")";
 
 	var query = connection.query(sql, function(err, rows){
             if (err != null) {
@@ -783,7 +758,28 @@ app.get('/api/software/:id', function(req, res){
     });
 });
 
+// GET api/software auto inc
+app.get('/api/software_auto', function(req, res){
+    pool.getConnection(function(err, connection) {
+        if (err != null) {
+            res.end('Error connecting to mysql:' + err+'\n');
+        }
 
+        var sql = "SHOW TABLE STATUS LIKE 'software'";
+
+        var query = connection.query(sql, function(err, rows){
+            if (err != null) {
+                res.end("Query error:" + err);
+            } else {
+                res.send(rows);
+            }
+            // Release the connection
+            connection.release();
+        });
+
+        console.log(query.sql);
+    });
+});
 //POST functions
 
 app.post('/api/insert_products',function(req,res) {
@@ -792,7 +788,7 @@ app.post('/api/insert_products',function(req,res) {
             res.end('Error connecting to mysql:' + err+'\n');
         }
     
-        var sql = "INSERT INTO products (product_name,product_type,product_description,parent_product_id,created_at,updated_at)" + 
+        var sql = "INSERT INTO products (product_name,product_type,product_description,parent_product_id,created_at,updated_at) " + 
 				   "VALUES ('" + req.query.product_name + "','" + req.query.product_type + "','" + req.query.product_description + "'," + req.query.parent_product_id + ",NOW(),NOW())";	   
 		var query = connection.query(sql, function(err, rows) {
 			if (err != null) {
@@ -807,13 +803,13 @@ app.post('/api/insert_products',function(req,res) {
     });
 });
 
-app.post('/api/software',function(req,res) {
+app.post('/api/insert_software',function(req,res) {
 	pool.getConnection(function(err, connection) {
         if(err != null) {
             res.end('Error connecting to mysql:' + err+'\n');
         }
         
-        var sql = "INSERT INTO software (software_name,software_version,software_description,created_at,updated_at)" +
+        var sql = "INSERT INTO software (software_name,software_version,software_description,created_at,updated_at) " +
 				  "VALUES ('" + req.query.software_name + "','" + req.query.software_version + "','" + req.query.software_description + "',NOW(),NOW())"; 
         
 		var query = connection.query(sql, function(err, rows) {
@@ -829,13 +825,12 @@ app.post('/api/software',function(req,res) {
     });
 });
 
-app.post('/api/product_software',function(req,res) {
+app.post('/api/insert_product_software',function(req,res) {
 	pool.getConnection(function(err, connection) {
         if(err != null) {
             res.end('Error connecting to mysql:' + err+'\n');
         }
-        
-        var sql = "INSERT INTO product_software (product_id,software_id,package_id,created_at,updated_at)" +
+        var sql = "INSERT INTO product_software (product_id,software_id,package_id,created_at,updated_at) " +
 				  "VALUES (" + req.query.product_id + "," + req.query.software_id + "," + req.query.package_id +",NOW(),NOW())";
         
 		var query = connection.query(sql, function(err, rows) {
