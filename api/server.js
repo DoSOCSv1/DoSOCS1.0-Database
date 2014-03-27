@@ -119,12 +119,13 @@ app.put('/api/spdx/:id', function(req, res) {
         if(err != null) {
             res.end('Error connecting to mysql:' + err+'\n');
         }
-	    var sql = "UPDATE " +
-                    "spdx_docs " +
-                  "SET " +
-                    "document_comment=" + connection.escape(req.query.document_comment) +  
-                  " WHERE "+
-                    "id=" + connection.escape(req.params.id); 
+	var sql = "UPDATE " +
+                "spdx_docs " +
+            "SET " +
+                "document_comment=" + connection.escape(req.query.document_comment) +  
+            " WHERE "+
+                "id=" + connection.escape(req.params.id); 
+
         var query = connection.query(sql, function(err, rows){
             if (err != null) {
                 res.end("Query error:" + err);
@@ -132,13 +133,43 @@ app.put('/api/spdx/:id', function(req, res) {
                 res.send("success");
             }
         });
-	    sql = "UPDATE " +
-                    "packages " +
-                "SET " +
-                    "package_license_concluded=" + connection.escape(req.query.licenseconcluded) + 
-              " WHERE "+
-                    "id=" + connection.escape(req.query.package_id); 
+
+	sql = "UPDATE " +
+                "packages " +
+            "SET " +
+                "package_license_concluded=" + connection.escape(req.query.licenseconcluded) + 
+            " WHERE "+
+                "id=" + connection.escape(req.query.package_id); 
+
         var query2 = connection.query(sql, function(err, rows){
+            if (err != null) {
+                res.end("Query error:" + err);
+            } else {
+                res.send("success");
+            }
+        });
+
+        sql = "INSERT INTO " +
+                "spdx_edit_review " +
+                "(edit_review_date," +
+                " edited_document_comment," +
+                " edited_package_license_concluded," +
+                " edit_review_comment," +
+                " spdx_doc_id," +
+                " edit_reviewer," +
+                " created_at," +
+                " updated_at)" +
+            "VALUES (" +
+                "NOW(), " +
+                connection.escape(req.query.document_comment) + ", " +
+                connection.escape(req.query.licenseconcluded) + ", " +
+                "Not Provided, " +
+                connection.escape(req.params.id) + ", " +
+                connection.escape(req.query.editor) + ", " +
+                "NOW(), " +
+                "NULL);";
+
+        var query3 = connection.query(sql, function(err, rows){
             if (err != null) {
                 res.end("Query error:" + err);
             } else {
