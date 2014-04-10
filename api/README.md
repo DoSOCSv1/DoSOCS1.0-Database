@@ -49,5 +49,5 @@ and run with
 `forever start server.js`
 
 To confirm that the service is running and is working, send a request with  
-`http://localhost:3000/api/spdxdocs`  
+`http://localhost:3000/api/spdx`  
 If no data is returned, or errors occur and you are unable to diagnose the problem, feel free to create an issue.
