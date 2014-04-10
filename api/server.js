@@ -10,7 +10,7 @@ var pool = mysql.createPool({
     database: cs.database,
     user : cs.user,
     password : cs.password,
-    socketPath: '/var/run/mysqld/mysqld.sock'
+    socketPath: cs.socketPath
 });
 
 //************************************************************
