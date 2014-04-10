@@ -1,6 +1,4 @@
--- phpMyAdmin SQL Dump
--- version 4.0.3
--- http://www.phpmyadmin.net
+--This will created the SPDX database.
 --
 -- Host: localhost
 -- Generation Time: Feb 19, 2014 at 11:57 PM
