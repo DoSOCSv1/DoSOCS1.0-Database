@@ -1,6 +1,4 @@
--- phpMyAdmin SQL Dump
--- version 4.0.3
--- http://www.phpmyadmin.net
+--This will created the SPDX database.
 --
 -- Host: localhost
 -- Generation Time: Feb 19, 2014 at 11:57 PM
@@ -196,59 +194,6 @@ CREATE TABLE IF NOT EXISTS `licensings` (
   FOREIGN KEY (`package_file_id`) REFERENCES package_files(`id`),
   FOREIGN KEY (`doc_license_association_id`) REFERENCES doc_license_associations(`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `products`
---
-
-CREATE TABLE IF NOT EXISTS `products` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `product_name` varchar(255) NOT NULL,
-  `product_type` varchar(255) NOT NULL,
-  `product_description` text,
-  `created_at` datetime NOT NULL,
-  `updated_at` datetime DEFAULT NULL,
-  `product_url` varchar(255) NOT NULL,
-  `creator` int(11) NOT NULL,
-  `parent_product_id` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `software`
---
-
-CREATE TABLE IF NOT EXISTS `software` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `software_name` varchar(255) NOT NULL,
-  `software_version` varchar(255) NOT NULL,
-  `software_description` text,
-  `created_at` datetime NOT NULL,
-  `updated_at` datetime DEFAULT NULL,
-  `creator` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `product_software`
---
-
-CREATE TABLE IF NOT EXISTS `product_software` (
-  `software_id` int(11) NOT NULL,
-  `product_id` int(11) NOT NULL,
-  `package_id` int(11) NOT NULL,
-  `created_at` datetime NOT NULL,
-  `updated_at` datetime DEFAULT NULL,
-  FOREIGN KEY (`software_id`) REFERENCES software(`id`),
-  FOREIGN KEY (`product_id`) REFERENCES products(`id`),
-  FOREIGN KEY (`package_id`) REFERENCES packages(`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
