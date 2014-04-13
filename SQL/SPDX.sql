@@ -1,4 +1,4 @@
---This will created the SPDX database.
+-- This will created the SPDX database.
 --
 -- Host: localhost
 -- Generation Time: Feb 19, 2014 at 11:57 PM
