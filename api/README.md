@@ -15,7 +15,7 @@ Once you have mysql installed, use [SPDX.sql](../SQL/SPDX.sql) to create the dat
 
 To input some good test data, use the [testdata.sql](../SQL/testdata.sql), again, using the source command.
 
-`mysql> source Good_Test_Data.sql`
+`mysql> source testdata.sql`
 
 ###Setting up the API web server
 Once your db instance is up and running, edit the [connectionSettings.js](connectionSettings.js) to match the settings for your db that you would like the API to connect to.
