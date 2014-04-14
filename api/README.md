@@ -43,3 +43,30 @@ Install it with
 and run with 
 
 `forever start server.js`
+
+## Methods
+### SPDX Docs
+`GET api/spdx` Return all SPDX docs  
+`GET api/spdx/{id}` Return SPDX doc by id  
+`PUT api/spdx/{id}` Update SPDX doc  
+
+### Files
+`GET api/files` Return all files  
+
+| Parameters     | Action                                                          |
+|----------------|-----------------------------------------------------------------|
+| packageid={id} | Returns all files associated with package with the specified id |
+
+`GET api/files/{id}` Return one file by id
+
+### Examples
+(assuming the api is hosted at http://localhost:3000)  
+`http://localhost:3000/api/spdx`  
+`http://localhost:3000/api/spdx/2`    
+`http://localhost:3000/api/files`  
+`http://localhost:3000/api/files/1`  
+`http://localhost:3000/api/files?packageid=2`  
+
+
+
+
