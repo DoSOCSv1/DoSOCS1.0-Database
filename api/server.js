@@ -1,11 +1,14 @@
-var express = require('express'),
-    morgan  = require('morgan'),
+var express    = require('express'),
+    morgan     = require('morgan'),
     bodyParser = require('body-parser'),
-    app     = express(),
+    app        = express(),
     
     // models
-    doc = require('./models/doc.js'),
-    file = require('./models/file.js');
+    doc        = require('./models/doc.js'),
+    file       = require('./models/file.js'),
+    
+    // interaction with do_spdx
+    scan       = require('./do_spdx/scan.js');
     
 app.use(morgan('dev'));
 app.use(bodyParser());
@@ -19,6 +22,9 @@ app.all('*', function(req, res, next) {
     res.header("Access-Control-Allow-Headers", "Content-Type");
     next();
 });
+
+// scans
+app.post('/api/scan', scan.test); // POST api/scan
 
 // spdx documents
 app.get('/api/spdx', doc.getAll); // GET api/spdx
