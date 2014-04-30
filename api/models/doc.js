@@ -86,8 +86,8 @@ exports.update = function (req, res) {
         });
 
 	    var packages = "UPDATE packages " +
-          "SET package_license_concluded=" + connection.escape(req.bod.licenseconcluded) + 
-          " WHERE id=" + connection.escape(req.body.package_id); 
+          "SET package_license_concluded=" + connection.escape(req.body.package_license_concluded) + 
+          " WHERE id=" + connection.escape(req.body.id); 
 
         connection.query(packages, function(err, rows){
             if (err !== null) {
