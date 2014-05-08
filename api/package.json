@@ -1,0 +1,13 @@
+{
+	"name": "spdx-api",
+	"description": "spdx-api",
+	"version": "1.0.0",
+	"private": true,
+	"dependencies": {
+		"express": "4.0.0", 
+		"mysql": "2.1.1",
+		"morgan": "~1.0.0",
+        "body-parser": "~1.0.0",
+        "formidable": "1.0.14"
+	}
+}

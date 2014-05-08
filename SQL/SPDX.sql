@@ -1,4 +1,4 @@
---This will created the SPDX database.
+-- This will created the SPDX database.
 --
 -- Host: localhost
 -- Generation Time: Feb 19, 2014 at 11:57 PM
@@ -207,6 +207,26 @@ CREATE TABLE IF NOT EXISTS `reviewers` (
   `reviewer_comment` text NOT NULL,
   `spdx_doc_id` int(11) NOT NULL,
   `reviewer` varchar(255) NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`spdx_doc_id`) REFERENCES spdx_docs(`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `reviewers`
+--
+
+CREATE TABLE IF NOT EXISTS `spdx_edit_review` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `edit_review_date` datetime NOT NULL,
+  `edited_document_comment` text NOT NULL,
+  `edited_package_license_concluded` text NOT NULL,
+  `edit_review_comment` text NOT NULL,
+  `spdx_doc_id` int(11) NOT NULL,
+  `edit_reviewer` varchar(255) NOT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
