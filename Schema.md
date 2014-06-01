@@ -34,12 +34,21 @@ Tables
 | checksum_algorithm                      | varchar(255) | Not Null                         |
 | package_home_page                       | varchar(255) | Not Null                         |
 | package_source_info                     | varchar(255) | Not Null                         |
-| package_license_info_from_files         | text         |                                  |
 | package_license_comments                | text         |                                  |
 | package_verification_code               | varchar(255) | Not Null                         |
 | package_verification_code_excluded_file | varchar(255) | Not Null                         |
 | created_at                              | datetime     | Not Null                         |
 | updated_at                              | datetime     |                                  |
+
+<h5>package_license_info_from_files</h5>
+| Column Name                     | Data Type    | Constraints                      |
+|---------------------------------|--------------|----------------------------------|
+| id                              | int(11)      | Auto Increment, Not Null, unique |
+| pacakge_id                      | int(11)      | Not Null                         |
+| package_license_info_from_files | varchar(255) | Not Null
+| created_at                      | datetime     | Not Null                         |
+| updated_at                      | datetime     |                                  |
+
 
 <h5>package_files</h5>
 | Column Name                  | Data Type    | Constraints                      |
