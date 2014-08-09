@@ -233,6 +233,18 @@ CREATE TABLE IF NOT EXISTS `spdx_edit_review` (
   FOREIGN KEY (`spdx_doc_id`) REFERENCES spdx_docs(`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
+--
+-- Table structure for table `package_license_info_from_files`
+--
+
+CREATE TABLE IF NOT EXISTS `package_license_info_from_files` (
+  `package_id` INT NOT NULL,
+  `package_license_info_from_files` varchar(255) NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  FOREIGN KEY (`package_id`) REFERENCES packages(`id`)
+);
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
