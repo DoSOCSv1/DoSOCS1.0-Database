@@ -117,6 +117,14 @@ Tables
 | created_at      | datetime  | Not Null                         |
 | updated_at      | datetime  |                                  |
 
+<h5>package_license_info_from_files</h5>
+| Column Name     | Data Type | Constraints                      |
+|---------------------------------|----------------|----------------------------------|
+| package_id                      | int(11)        | Not Null                         |
+| package_license_info_from_files | varchar(255)   | Not Null,FK(package_files(id))   |
+| created_at                      | datetime       | Not Null                         |
+| updated_at                      | datetime       |                                  |
+
 <h5>creators</h5>
 | Column Name          | Data Type    | Constraints                      |
 |----------------------|--------------|----------------------------------|
