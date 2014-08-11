@@ -87,7 +87,6 @@ CREATE TABLE IF NOT EXISTS `package_files` (
   `artifact_of_project_homepage` varchar(255) NOT NULL,
   `artifact_of_project_uri` varchar(255) NOT NULL,
   `license_concluded` varchar(255) NOT NULL,
-  `license_info_in_file` text NOT NULL,
   `file_checksum` varchar(255) NOT NULL,
   `file_checksum_algorithm` varchar(255) NOT NULL,
   `relative_path` varchar(255) NOT NULL,
