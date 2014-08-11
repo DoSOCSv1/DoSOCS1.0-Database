@@ -63,7 +63,6 @@ CREATE TABLE IF NOT EXISTS `packages` (
   `checksum_algorithm` varchar(255) NOT NULL,
   `package_home_page` varchar(255) NOT NULL,
   `package_source_info` varchar(255) NOT NULL,
-  `package_license_info_from_files` text NOT NULL,
   `package_license_comments` text NOT NULL,
   `package_verification_code` varchar(255) NOT NULL,
   `package_verification_code_excluded_file` varchar(255) NOT NULL,
@@ -95,6 +94,7 @@ CREATE TABLE IF NOT EXISTS `package_files` (
   `file_contributor` text NOT NULL,
   `file_dependency` text NOT NULL,
   `file_comment` text NOT NULL,
+  `license_info_in_file` varchar(255) NOT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
