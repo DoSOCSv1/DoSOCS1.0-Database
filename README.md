@@ -1,4 +1,4 @@
-Database
+SPDXDatabase
 ========
 
 <h3>About</h3>
