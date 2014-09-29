@@ -1,4 +1,4 @@
-SPDXDatabase
+SOCSDatabase
 ========
 
 <h3>About</h3>
