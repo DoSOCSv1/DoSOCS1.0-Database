@@ -1,4 +1,4 @@
-API to communicate between SPDX Database and spdx-dashboard.
+API to communicate between SOCS Database and SOCS Dashboard.
 
 ##Instalation Instructions
 ###Requirements
