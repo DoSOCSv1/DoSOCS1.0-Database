@@ -7,7 +7,7 @@ Database schema for is a Free Open Source Software (FOSS) project built for OCRL
 <a href="https://github.com/socs-dev-env/SOCSDatabase/blob/master/Schema.md">Schema</a>
 
 <h3>Requirements</h3>
-* [mysql](www.mysql.com) (or another db of your choosing, however testing has only been done in mysql)
+* [mysql](http://www.mysql.com/) (or another db of your choosing, however testing has only been done in mysql)
 
 
 
