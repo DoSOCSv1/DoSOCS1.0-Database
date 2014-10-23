@@ -4,7 +4,7 @@ SOCSDatabase
 <h3>About</h3>
 Database schema for is a Free Open Source Software (FOSS) project built for OCRL related projects
 
-<a href="https://github.com/socstools/SOCSDatabase/tree/master/Schema.md">Schema</a>
+<a href="https://github.com/socs-dev-env/SOCSDatabase/blob/master/Schema.md">Schema</a>
 
 <h3>Requirements</h3>
 * [mysql](www.mysql.com) (or another db of your choosing, however testing has only been done in mysql)
@@ -14,8 +14,8 @@ Database schema for is a Free Open Source Software (FOSS) project built for OCRL
 
 <h3>Installation</h3>
 <ol>
-  <li>Download <a href="https://github.com/socstools/SOCSDatabase/tree/master/SQL/SPDX.sql">SPDX.sql</a> to your host server.</li>
-  <li>Open a terminal and navigate to the directory you downloaded <a href="https://github.com/socstools/SOCSDatabase/tree/master/SQL/SPDX.sql">SPDX.sql</a> to.</li>
+  <li>Download <a href="https://github.com/socs-dev-env/SOCSDatabase/blob/master/SQL/SPDX.sql">SPDX.sql</a> to your host server.</li>
+  <li>Open a terminal and navigate to the directory you downloaded <a href="https://github.com/socs-dev-env/SOCSDatabase/blob/master/SQL/SPDX.sql">SPDX.sql</a> to.</li>
   <li>Run the following commands (Note: be sure to change the user name and password appropriately.)</li>
 </ol>
 `$> mysql --user=UserName --password=Password`
