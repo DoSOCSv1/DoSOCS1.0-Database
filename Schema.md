@@ -64,7 +64,6 @@ Tables
 | license_info_in_file         | text         |                                  |
 | file_checksum                | varchar(255) | Not Null                         |
 | file_checksum_algorithm      | varchar(255) | Not Null                         |
-| relative_path                | varchar(1000) | Not Null                         |
 | license_comments             | text         |                                  |
 | file_notice                  | text         |                                  |
 | file_contributor             | text         |                                  |
@@ -114,6 +113,7 @@ Tables
 | spdx_doc_id     | int(11)   | Not Null,FK(spdx_docs(id))       |
 | package_id      | int(11)   | Not Null,FK(packages(id))        |
 | package_file_id | int(11)   | Not Null,FK(package_files(id))   |
+| relative_path   | varchar(1000) | Not Null                     |
 | created_at      | datetime  | Not Null                         |
 | updated_at      | datetime  |                                  |
 
