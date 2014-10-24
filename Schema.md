@@ -64,7 +64,7 @@ Tables
 | license_info_in_file         | text         |                                  |
 | file_checksum                | varchar(255) | Not Null                         |
 | file_checksum_algorithm      | varchar(255) | Not Null                         |
-| relative_path                | varchar(255) | Not Null                         |
+| relative_path                | varchar(1000) | Not Null                         |
 | license_comments             | text         |                                  |
 | file_notice                  | text         |                                  |
 | file_contributor             | text         |                                  |
