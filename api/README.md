@@ -1,3 +1,5 @@
+Important Note: this api isn't currently being maintained and may not be in a functioning state.
+
 API to communicate between SOCS Database and SOCS Dashboard.
 
 ##Instalation Instructions
